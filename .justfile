@@ -11,5 +11,5 @@ build:
 build-release:
   @cmake --build build/Release
 
-test: build
-  @ctest --test-dir build/Debug
+test *args: build
+  @ctest --test-dir build/Debug {{args}}

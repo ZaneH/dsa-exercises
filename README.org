@@ -1,9 +1,4 @@
-* C++ init
+* Data Structures & Algorithms
 
-  This is a template to quickly get started writing C++, customize it how you like.
-
-  #+BEGIN_SRC sh
-  $ git clone https://github.com/ZaneH/cpp-init.git project-name
-  $ cd project-name
-  $ direnv allow
-  #+END_SRC
+** Projects
+   - [[./ds/ring_buffer][Ring Buffer]]
