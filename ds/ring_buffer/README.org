@@ -1,0 +1,86 @@
+#+OPTIONS: f:t
+
+* Ring Buffer
+  A ring buffer is often used as a FIFO queue for streams of data. Statically allocated ring buffers are commonly seen in lock-free queues because they have a predictable lookup pattern.
+  Not every ring buffer is statically allocated, however they often are when used in performance-sensitive scenarios to avoid additional memory allocations during program execution.
+
+** Terminology
+   - Head: The write index
+   - Tail: The read index
+   - Capacity: The number of available slots to place data
+   - Push: Write to the next memory slot
+   - Pop: Read from the next memory slot
+   - Index: Zero-based value that increments and wraps-around when equal to the capacity
+   - Counter: Zero-based value used to calculate the index. The counter is often incremented continuously without wrapping around.
+
+** Invariants
+   - Head >= Tail
+   - Index < Capacity
+     - Assuming a zero-based index, the index must "wrap-around" once it reaches the capacity to ensure no read/write operations are attempted outside the buffer.
+     - e.g. If the capacity is 5, when either the Head or Tail reach 5, instead of using 5 as an index, it will use 0.
+   - Index >= 0
+
+** Index Methods
+   There are likely other methods of indexing a ring buffer, though these are the most popular options. The index needs to wrap-around when it goes beyond the capacity
+
+*** 1. Simple Modulo
+    Modulo is the simplest solution for calculating the index from the counter. Modulo is commonly used to constrain a value. This solution can be used for a ring buffer of any capacity.
+
+    #+BEGIN_SRC text
+    i = Counter % Capacity
+    #+END_SRC
+
+    If the capacity is 10, and the counter is 10, the index will be 0.
+
+*** 2. AND Operation
+    Is the more performant option because it doesn't require a division operation[fn:1]. The only requirement for using this method of index is that the capacity is a power of 2 (e.g. 1, 2, 4, 8) because it relies on a bitwise operation.
+
+    #+BEGIN_SRC text
+    i = (Capacity - 1) & Counter
+    #+END_SRC
+
+**** Visualization
+     The two examples below should help explain how the AND operation works to turn the counter into a valid index.
+
+     #+BEGIN_SRC markdown
+     ## Capacity = 8
+     0 1 0 0 0
+
+     ---------------
+
+     ## Capacity - 1 = 7
+     0 0 1 1 1
+
+     ## Counter = 13
+     0 1 1 0 1
+
+     &
+
+     ## Index = 5
+     0 0 1 0 1
+     #+END_SRC
+
+     #+BEGIN_SRC markdown
+     ## Capacity = 16
+     1 0 0 0 0
+
+     ---------------
+
+     ## Capacity - 1 = 15
+     0 1 1 1 1
+
+     ## Counter = 15
+     0 1 1 1 1
+
+     &
+
+     ## Index = 0
+     0 0 0 0 0
+     #+END_SRC
+
+** Resources
+   - https://www.youtube.com/watch?v=bjz_bMNNWRk
+   - https://www.youtube.com/watch?v=K3P_Lmq6pw0
+
+** Footnotes
+[fn:1] Integer division is often said to take 15 to 40 CPU cycles [[http://ithare.com/infographics-operation-costs-in-cpu-clock-cycles/][Source]]
