@@ -12,10 +12,8 @@ set(PROJECT_NAME
 
 project(${PROJECT_NAME} LANGUAGES C CXX)
 
-# TODO: Replace all dsa_lib with new name
 add_library(dsa_lib
   SHARED
-  # TODO: Add lib source files
   ds/ring_buffer/ring_buffer.cc
 )
 
