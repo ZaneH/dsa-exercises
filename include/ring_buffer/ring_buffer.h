@@ -15,13 +15,15 @@ class RingBuffer {
   ~RingBuffer() { std::cout << "Destructor called\n"; }
 
   uint64_t capacity() { return N; }
-  void push(T elem) { (void)elem; }
-  T pop() {}
+  void push(T elem) { data_[to_index(head_idx_++)] = elem; }
+  T pop() { return data_[to_index(tail_idx_++)]; }
 
  private:
+  uint64_t to_index(uint64_t n) { return ((N - 1) & n); }
+
   std::array<T, N> data_;
-  std::uint64_t head_idx_;
-  std::uint64_t tail_idx_;
+  uint64_t head_idx_ = 0;
+  uint64_t tail_idx_ = 0;
 };
 }  // namespace dsa
 

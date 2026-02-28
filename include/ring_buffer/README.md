@@ -96,6 +96,4 @@ i = (Capacity - 1) & Counter
 - https://www.youtube.com/watch?v=bjz_bMNNWRk
 - https://www.youtube.com/watch?v=K3P_Lmq6pw0
 
-## Footnotes
-
 [^1]: Integer division is often said to take 15 to 40 CPU cycles | [Source](http://ithare.com/infographics-operation-costs-in-cpu-clock-cycles/)
