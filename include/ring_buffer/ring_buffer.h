@@ -1,8 +1,8 @@
 #ifndef INCLUDE_RING_BUFFER_RING_BUFFER_H_
 #define INCLUDE_RING_BUFFER_RING_BUFFER_H_
 
+#include <array>
 #include <cstdint>
-#include <iostream>
 
 namespace dsa {
 template <typename T, uint64_t N = 0>
@@ -12,7 +12,11 @@ class RingBuffer {
     // Assert that capacity is a power of 2
     static_assert((N & (N - 1)) == 0);
   }
-  ~RingBuffer() { std::cout << "Destructor called\n"; }
+  ~RingBuffer() {
+    for (std::size_t i = 0; i < capacity(); i++) {
+      data_[i].~T();
+    }
+  }
 
   constexpr uint64_t capacity() { return N; }
   void push(T elem) { data_[to_index(head_idx_++)] = elem; }
