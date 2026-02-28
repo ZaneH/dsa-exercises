@@ -13,8 +13,7 @@ set(PROJECT_NAME
 project(${PROJECT_NAME} LANGUAGES C CXX)
 
 add_library(dsa_lib
-  SHARED
-  ds/ring_buffer/ring_buffer.cc
+  INTERFACE
 )
 
 include(FetchContent)
@@ -87,6 +86,6 @@ target_link_options(project_defaults
   $<$<CONFIG:Debug>:${SAN_FLAGS}>
 )
 
-target_link_libraries(dsa_lib PRIVATE project_defaults)
+target_link_libraries(dsa_lib INTERFACE project_defaults)
 target_link_libraries(dsa_test PRIVATE project_defaults dsa_lib)
 # target_link_libraries(dsa_benchmark PRIVATE project_defaults dsa_lib)
