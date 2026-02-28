@@ -36,5 +36,6 @@ TEST(RingBuffer, WrapAround) {
   EXPECT_EQ(buf.capacity(), 2);
   EXPECT_EQ(buf.pop(), 3);
   EXPECT_EQ(buf.pop(), 7);
+  EXPECT_EQ(buf.pop(), 3);
 }
 }  // namespace dsa
