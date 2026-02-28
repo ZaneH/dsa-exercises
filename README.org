@@ -1,4 +1,0 @@
-* Data Structures & Algorithms
-
-** Projects
-   - [[./include/ring_buffer][Ring Buffer]]
