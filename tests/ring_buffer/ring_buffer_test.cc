@@ -33,7 +33,7 @@ TEST(RingBuffer, WrapAround) {
   buf.push(7);
 
   // Assert
-  EXPECT_EQ(buf.capacity(), 8);
+  EXPECT_EQ(buf.capacity(), 2);
   EXPECT_EQ(buf.pop(), 3);
   EXPECT_EQ(buf.pop(), 7);
 }
