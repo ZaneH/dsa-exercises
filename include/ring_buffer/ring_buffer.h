@@ -3,6 +3,7 @@
 
 #include <array>
 #include <cstdint>
+#include <utility>
 
 namespace dsa {
 template <typename T, uint64_t N = 0>
@@ -10,20 +11,16 @@ class RingBuffer {
  public:
   constexpr RingBuffer() {
     // Assert that capacity is a power of 2
-    static_assert((N & (N - 1)) == 0);
-  }
-  ~RingBuffer() {
-    for (std::size_t i = 0; i < capacity(); i++) {
-      data_[i].~T();
-    }
+    static_assert((N & (N - 1)) == 0, "capacity must be a power of 2");
+    static_assert(N > 0, "cannot have capacity of 0");
   }
 
-  constexpr uint64_t capacity() { return N; }
+  constexpr uint64_t capacity() noexcept { return N; }
   void push(T elem) { data_[to_index(head_idx_++)] = elem; }
-  T pop() { return data_[to_index(tail_idx_++)]; }
+  T pop() { return std::move(data_[to_index(tail_idx_++)]); }
 
  private:
-  constexpr uint64_t to_index(uint64_t n) { return ((N - 1) & n); }
+  constexpr uint64_t to_index(uint64_t n) noexcept { return ((N - 1) & n); }
 
   std::array<T, N> data_;
   uint64_t head_idx_ = 0;

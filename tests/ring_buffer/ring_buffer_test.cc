@@ -38,4 +38,16 @@ TEST(RingBuffer, WrapAround) {
   EXPECT_EQ(buf.pop(), 7);
   EXPECT_EQ(buf.pop(), 3);
 }
+
+TEST(RingBuffer, PopWhenEmpty) {
+  // Arrange
+  dsa::RingBuffer<uint8_t, 2> buf = RingBuffer<uint8_t, 2>();
+
+  // Act
+  auto val = buf.pop();
+
+  // Assert
+  EXPECT_EQ(buf.capacity(), 2);
+  EXPECT_EQ(val, 2);
+}
 }  // namespace dsa
