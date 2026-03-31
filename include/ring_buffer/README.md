@@ -87,8 +87,8 @@ i = (Capacity - 1) & Counter
 
     &
 
-    ## Index = 0
-    0 0 0 0 0
+    ## Index = 15
+    0 1 1 1 1
     ```
 
 ## Resources
