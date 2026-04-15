@@ -38,6 +38,7 @@ enable_testing()
 
 add_executable(dsa_test
   tests/ring_buffer/ring_buffer_test.cc
+  tests/trie/trie_test.cc
 )
 
 target_link_libraries(dsa_test

@@ -4,6 +4,10 @@ A trie (a.k.a. Prefix Tree) is a data structure used to index data efficiently. 
 (trie's are often used in autocomplete implementations) or IP address lookup tables (by storing octets as a node in the
 trie). Data that utilizes a prefix search will often be stored in a trie. A trie has time of O(n) and space O(n).
 
+The reason a trie is O(n) for time and space is because the number of child nodes is defined ahead of time. During
+lookup, the key is used to create an array index. The key can be a sequence of letters, a sequence of numbers, or
+another type that can be used to craft a zero-based index.
+
 ## Terminology
 
 - Node: A vertex within the trie data structure. Nodes can have ≥ 0 children. Nodes store the reference to their
